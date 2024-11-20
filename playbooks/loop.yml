@@ -1,0 +1,16 @@
+---
+- name: Loop through DevOps tools
+  hosts: localhost
+  collections: local
+  vars:
+    devops_tools:
+      - Ansible
+      - Docker
+      - Kubernetes
+      - Jenkins
+      - Terraform
+  tasks:
+    - name: Print DevOps tools
+      ansible.builtin.debug:
+        msg: 'DevOps tool: {{ item }}'
+      loop: "{{ devops_tools }}"
