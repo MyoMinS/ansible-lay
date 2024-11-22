@@ -1,0 +1,19 @@
+---
+- hosts: web_nodes
+  become: yes
+  tasks: 
+    - name: Install nginx package
+      ansible.builtin.apk:
+        name: nginx
+        state: present
+    - name: Update nginx configuration
+      ansible.builtin.lineinfile:
+        path: /etc/nginx/nginx.conf
+        regexp: 'keepalive_timeout'
+        line: '    keepalive_timeout 60;'
+      notify: restart nginx
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

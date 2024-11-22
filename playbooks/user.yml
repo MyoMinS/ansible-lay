@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Create user with specific UID
+      ansible.builtin.user:
+        name: devops
+        uid: 2000
+        group: sudo
+        state: present
+    - name: Allow devops user to run sudo command without password
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers
+        line: 'devops ALL=(ALL) NOPASSWD: ALL'
+        
